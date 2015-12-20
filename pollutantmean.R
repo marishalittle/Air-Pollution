@@ -1,11 +1,12 @@
 pollutantmean <- function(directory, pollutant, id = 1:332) {
-        files_full <- list.files(directory, full.names = TRUE) 
-        
-        dat <- data.frame()
-        
-        for (i in id) {
-                dat <- rbind(dat, read.csv(files_full[i]))
-        }
-        
-        mean(dat[, pollutant], na.rm = TRUE)
+  data <- data.frame();
+  files <- list.files(directory, full.names = TRUE);
+  
+  for (index in files) {
+    data <- rbind(data, read.csv(index, comment.char = ""))
+  }
+  
+  neededMonitors <- subset(data, ID %in% id);
+  pollutantMean <- mean(neededMonitors[[pollutant]], na.rm = TRUE);
+  pollutantMean;
 }
