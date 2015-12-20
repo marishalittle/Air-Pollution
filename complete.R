@@ -1,14 +1,14 @@
 complete <- function(directory, id = 1:332) {
-        files_full <- list.files(directory, full.names = TRUE)
-        dat <- data.frame()
-        
-        for (i in id) {
-                moni_i <- read.csv(files_full[i])
-                nobs <- sum(complete.cases(moni_i))
-                tmp <- data.frame(i, nobs)
-                dat <- rbind(dat, tmp)
-        }
-        
-        colnames(dat) <- c("id", "nobs")
-        dat
+  files <- list.files(directory, full.names = TRUE);
+  completeCases <- data.frame();
+  
+  for (index in id) {
+    data <- read.csv(files[index], comment.char = "");
+    c <- complete.cases(data);
+    naRm <- data[c, ];
+    completeCases <- rbind(completeCases, c(index, nrow(naRm)));
+  }
+  
+  names(completeCases) <- c("id", "nobs");
+  completeCases;
 }
